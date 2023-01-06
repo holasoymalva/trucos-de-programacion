@@ -1,4 +1,4 @@
-# Dulce y trucos de programacion
+# Dulce y truco de programacion 🍬
 
 Tips y Trucos de programacion en diferentes lenguajes para mejorar como dev.
 
