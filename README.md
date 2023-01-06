@@ -11,28 +11,40 @@ Tips y Trucos de programacion en diferentes lenguajes para mejorar como dev.
 * [Trucos en Typescript](#trucos-en-typescript)
 * [Trucos en Swift](#trucos-en-swift)
 
+---------------------------------------
+
 ## Trucos en C++
 
 
+---------------------------------------
+
 ## Trucos en Java
 
+---------------------------------------
 
 ## Trucos en JavaScript
 
+---------------------------------------
 
 ## Trucos en Python
 
+---------------------------------------
 
 ## Trucos en Kotlin
 
+---------------------------------------
+
 ## Trucos en Golang
 
+---------------------------------------
 
 ## Trucos en Typescript
 
+---------------------------------------
 
 ## Trucos en Swift
 
+---------------------------------------
 
 
 ## Author
