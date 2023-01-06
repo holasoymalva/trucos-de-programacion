@@ -15,7 +15,6 @@ Tips y Trucos de programacion en diferentes lenguajes para mejorar como dev.
 
 ## Trucos en C++
 
-
 ---------------------------------------
 
 ## Trucos en Java
