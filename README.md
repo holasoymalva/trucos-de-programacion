@@ -2,13 +2,14 @@
 
 Tips y Trucos de programacion en diferentes lenguajes para mejorar como dev.
 
-* [Trucos en C++]()
-* [Trucos en Java]()
-* [Trucos en JavaScript]()
-* [Trucos en Python]()
-* [Trucos en Kotlin]()
-* [Trucos en Typescript]()
-* [Trucos en Swift]()
+* [Trucos en C++](#trucos-en-c)
+* [Trucos en Java](#trucos-en-java)
+* [Trucos en JavaScript](#trucos-en-javascript)
+* [Trucos en Python](#trucos-en-python)
+* [Trucos en Kotlin](#trucos-en-kotlin)
+* [Trucos en Golang](#trucos-en-golang)
+* [Trucos en Typescript](#trucos-en-typescript)
+* [Trucos en Swift](#trucos-en-swift)
 
 ## Trucos en C++
 
@@ -23,6 +24,8 @@ Tips y Trucos de programacion en diferentes lenguajes para mejorar como dev.
 
 
 ## Trucos en Kotlin
+
+## Trucos en Golang
 
 
 ## Trucos en Typescript
