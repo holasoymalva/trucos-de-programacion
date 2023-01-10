@@ -15,6 +15,49 @@ Tips y Trucos de programacion en diferentes lenguajes para mejorar como dev.
 
 ## Trucos en C++
 
+### Bucles `for` basados en rangos
+
+Un bucle for basado en rango es una versión mejorada del bucle for tradicional y se introdujo en C++ 11.
+
+La sintaxis de un bucle for basado en rango es:
+
+`for( declaracion_rango : expresion_rango )`
+
+
+Como ejemplo, puede recorrer una matriz de números usando un bucle for basado en rango de la siguiente manera:
+
+
+``` C++
+int numeros[] = {1,2,3,4,5};
+for (auto numero: numeros){
+    cout << numero << endl;
+}
+```
+
+O puede recorrer los caracteres en una cadena de manera similar usando un bucle for basado en rango:
+
+``` C++
+string nombre = "EllaNoTeAma";
+for (auto letra: nombre){
+    cout << letra << endl;
+}
+```
+
+### Usar Auto para omitir el tipo de datos de una variable
+
+Podemos omitir el tipo de datos de una variable utilizando la palabra AUTO en C++ apartir de la version 11. 
+Esto es extremadamente útil cuando necesita declarar una variable en tiempo de ejecución, por ejemplo, cuando usamos iteradores.
+
+Como ejemplo, los tipos de datos de las siguientes variables se declaran durante el tiempo de ejecución.
+
+``` C++
+auto a = 'Hola';
+auto t = true;
+auto x = 1;
+auto y = 2.0;
+```
+
+
 ---------------------------------------
 
 ## Trucos en Java
