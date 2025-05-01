@@ -1,4 +1,4 @@
-# Dulce y truco de programacion 🍬
+# 🍬 Dulce y truco de programacion 🍬
 
 Tips y Trucos de programacion en diferentes lenguajes para mejorar como dev.
 Importante: De momento voy agregando trucos con forme subo los videos a la plataforma de tiktok 🤙
