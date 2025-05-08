@@ -281,11 +281,368 @@ const total = items.length * precioUnitario;
 
 ---------------------------------------
 
+## 🔧 Trucos de Programación en Node.js
+
+### 1️⃣ **Streams para procesar archivos grandes sin colapsar la memoria**
+
+Cuando necesitamos trabajar con archivos grandes, algunos hacen:
+
+```js
+const fs = require('fs');
+const data = fs.readFileSync('archivo.txt', 'utf8');
+console.log(data);
+```
+
+Esto **no es óptimo**, porque `fs.readFileSync()` carga todo el archivo en memoria, lo que puede romper tu app si el archivo es muy grande.
+
+**La mejor solución sería usar `streams`**:
+
+```js
+const fs = require('fs');
+const stream = fs.createReadStream('archivo.txt', 'utf8');
+stream.on('data', chunk => console.log(chunk));
+```
+
+**Esto debido a que** los *streams* leen los datos en pequeños bloques y los procesan conforme van llegando, lo cual es mucho más eficiente para manejar grandes volúmenes de información.
+
+---
+
+### 2️⃣ **Uso de `cluster` para aprovechar todos los núcleos del procesador**
+
+Por defecto, una app Node.js corre en un solo núcleo, así que si tienes un servidor con varios, los demás quedan sin usar:
+
+```js
+// servidor tradicional en Node.js usa solo un hilo
+```
+
+**Esto no es óptimo para alto rendimiento.**
+
+**La mejor solución sería usar el módulo `cluster`**:
+
+```js
+const cluster = require('cluster');
+const os = require('os');
+
+if (cluster.isPrimary) {
+  const cpus = os.cpus().length;
+  for (let i = 0; i < cpus; i++) cluster.fork();
+} else {
+  require('./servidor'); // aquí corre tu app real
+}
+```
+
+**Esto debido a que** puedes crear múltiples procesos que trabajen en paralelo, uno por cada núcleo, mejorando el rendimiento en producción.
+
+---
+
+### 3️⃣ **Manejo global de errores con `process.on()`**
+
+Cuando usamos promesas y funciones asíncronas, a veces olvidamos manejar errores:
+
+```js
+someAsyncFunction(); // sin try/catch ni .catch()
+```
+
+**Esto puede hacer que la app se caiga silenciosamente.**
+
+**La mejor solución sería usar eventos globales para capturar errores no manejados**:
+
+```js
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Rechazo no manejado:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Excepción no capturada:', err);
+});
+```
+
+**Esto debido a que** permite registrar o actuar ante errores inesperados y mantener tu app estable.
+
+---
+
+### 4️⃣ **Evitar bloqueos usando funciones asíncronas y `await`**
+
+Cuando usamos operaciones lentas de forma síncrona, como:
+
+```js
+const data = fs.readFileSync('archivo.txt');
+```
+
+**Esto detiene todo el hilo de ejecución**, lo cual es un problema si tienes múltiples usuarios conectados.
+
+**La mejor solución sería usar `async/await` con funciones no bloqueantes**:
+
+```js
+const fs = require('fs/promises');
+const data = await fs.readFile('archivo.txt', 'utf8');
+```
+
+**Esto debido a que** Node.js es de un solo hilo, y usar I/O asíncrono mantiene la app rápida y reactiva.
+
+---
+
+### 5️⃣ **Uso de `dotenv` para separar configuración sensible del código**
+
+Cuando incluimos claves de API o configuraciones directamente en el código:
+
+```js
+const apiKey = 'MI_CLAVE_SECRETA';
+```
+
+**Esto no es seguro ni profesional.**
+
+**La mejor solución sería usar variables de entorno con `dotenv`**:
+
+```js
+// .env
+API_KEY=MI_CLAVE_SECRETA
+```
+
+```js
+// app.js
+require('dotenv').config();
+const apiKey = process.env.API_KEY;
+```
+
+**Esto debido a que** facilita el manejo de configuraciones entre entornos (dev, prod) y protege datos sensibles del código fuente.
+
+
+---------------------------------------
+
 ## Trucos en Java
 
 ---------------------------------------
 
-## Trucos en JavaScript
+## 🔥 Trucos de Programación en JavaScript
+
+### 1️⃣ **Usar `map()` en lugar de `forEach()` para transformar arreglos**
+
+Cuando necesitamos transformar todos los elementos de un arreglo, muchos usan:
+
+```javascript
+let resultado = [];
+[1, 2, 3].forEach(x => resultado.push(x * 2));
+```
+
+Pero esto **no es muy óptimo** porque requiere crear y manipular manualmente un nuevo arreglo.
+
+**La mejor solución sería usar `map()`**:
+
+```javascript
+let resultado = [1, 2, 3].map(x => x * 2);
+```
+
+**Esto debido a que** `map()` devuelve automáticamente un nuevo arreglo sin modificar el original, con mejor rendimiento y código más limpio.
+
+---
+
+### 2️⃣ **Uso de `filter()` en lugar de bucles para filtrar datos**
+
+Cuando queremos obtener solo ciertos elementos:
+
+```javascript
+let filtrados = [];
+for (let x of datos) {
+    if (x.activo) filtrados.push(x);
+}
+```
+
+**No es óptimo.**
+
+**La mejor solución**:
+
+```javascript
+let filtrados = datos.filter(x => x.activo);
+```
+
+**Esto debido a que** `filter()` es más declarativo, evita errores y facilita la lectura.
+
+---
+
+### 3️⃣ **Evitar bucles anidados usando `reduce()`**
+
+Cuando sumamos valores o agrupamos datos:
+
+```javascript
+let suma = 0;
+for (let x of numeros) suma += x;
+```
+
+**Esto funciona pero no es óptimo.**
+
+**La mejor solución**:
+
+```javascript
+let suma = numeros.reduce((a, b) => a + b, 0);
+```
+
+**Esto debido a que** `reduce()` permite manejar grandes volúmenes de datos con una sola función, sin necesidad de múltiples bucles.
+
+---
+
+### 4️⃣ **Uso de `Set` para eliminar duplicados**
+
+Cuando eliminamos duplicados manualmente:
+
+```javascript
+let unicos = [];
+for (let x of arreglo) {
+    if (!unicos.includes(x)) unicos.push(x);
+}
+```
+
+**No es eficiente.**
+
+**La mejor solución**:
+
+```javascript
+let unicos = [...new Set(arreglo)];
+```
+
+**Esto debido a que** `Set` no permite duplicados y realiza búsquedas más rápidas que `includes`.
+
+---
+
+### 5️⃣ **Desestructuración para extraer valores fácilmente**
+
+Cuando accedemos repetidamente a propiedades:
+
+```javascript
+let nombre = persona.nombre;
+let edad = persona.edad;
+```
+
+**Esto es repetitivo.**
+
+**La mejor solución**:
+
+```javascript
+let { nombre, edad } = persona;
+```
+
+**Esto debido a que** la desestructuración hace el código más limpio y evita repeticiones.
+
+---
+
+### 6️⃣ **Uso de parámetros por defecto en funciones**
+
+Cuando asignamos valores por defecto así:
+
+```javascript
+function saludar(nombre) {
+    nombre = nombre || 'Invitado';
+    console.log(`Hola, ${nombre}`);
+}
+```
+
+**Esto es antiguo y puede fallar si el valor es falsy (como 0 o "").**
+
+**La mejor solución**:
+
+```javascript
+function saludar(nombre = 'Invitado') {
+    console.log(`Hola, ${nombre}`);
+}
+```
+
+**Esto debido a que** los parámetros por defecto son más seguros y modernos (desde ES6).
+
+---
+
+### 7️⃣ **Encadenamiento opcional (`?.`) para evitar errores en propiedades anidadas**
+
+Cuando accedemos a propiedades anidadas:
+
+```javascript
+let ciudad = usuario && usuario.direccion && usuario.direccion.ciudad;
+```
+
+**Este enfoque es engorroso.**
+
+**La mejor solución**:
+
+```javascript
+let ciudad = usuario?.direccion?.ciudad;
+```
+
+**Esto debido a que** el encadenamiento opcional evita errores si alguna propiedad intermedia no existe.
+
+---
+
+### 8️⃣ **Uso del operador rest (`...`) para combinar listas y objetos**
+
+Cuando combinamos arreglos:
+
+```javascript
+let combinado = lista1.concat(lista2);
+```
+
+**Puede ser menos intuitivo.**
+
+**La mejor solución**:
+
+```javascript
+let combinado = [...lista1, ...lista2];
+```
+
+**Esto debido a que** el operador spread/rest es más flexible y también permite combinar objetos:
+
+```javascript
+let nuevoObjeto = { ...objeto1, ...objeto2 };
+```
+
+---
+
+### 9️⃣ **Funciones flecha (`=>`) para mantener el contexto de `this`**
+
+Cuando usamos funciones normales:
+
+```javascript
+function Persona() {
+    this.edad = 0;
+    setInterval(function() {
+        this.edad++;
+    }, 1000);
+}
+```
+
+**Aquí `this` no se comporta como esperamos.**
+
+**La mejor solución**:
+
+```javascript
+function Persona() {
+    this.edad = 0;
+    setInterval(() => {
+        this.edad++;
+    }, 1000);
+}
+```
+
+**Esto debido a que** las arrow functions no crean su propio `this`, usan el del contexto donde fueron creadas.
+
+---
+
+### 🔟 **Uso de `Promise.all()` para múltiples promesas en paralelo**
+
+Cuando manejamos varias promesas una por una:
+
+```javascript
+let resultado1 = await promesa1;
+let resultado2 = await promesa2;
+```
+
+**Esto es secuencial y lento.**
+
+**La mejor solución**:
+
+```javascript
+let [resultado1, resultado2] = await Promise.all([promesa1, promesa2]);
+```
+
+**Esto debido a que** `Promise.all()` ejecuta todas las promesas en paralelo, reduciendo el tiempo de espera.
+
 
 ---------------------------------------
 
